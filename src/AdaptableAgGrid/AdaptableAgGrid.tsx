@@ -25,291 +25,59 @@ LicenseManager.setLicenseKey(import.meta.env.VITE_AG_GRID_LICENSE_KEY);
 const CONFIG_REVISION = 1;
 
 export const AdaptableAgGrid = () => {
-  const gridOptions = useMemo<GridOptions<WebFramework>>(
+  const gridOptions = useMemo<any>(
     () => ({
       defaultColDef,
       columnDefs,
       rowData,
-      sideBar: true,
-      statusBar: {
-        statusPanels: [
-          { statusPanel: 'agTotalRowCountComponent', align: 'left' },
-          { statusPanel: 'agFilteredRowCountComponent' },
-          {
-            key: 'Center Panel',
-            statusPanel: 'AdaptableStatusPanel',
-            align: 'center',
-          },
-        ],
+      stopEditingWhenCellsLoseFocus: true,
+      autoGroupColumnDef: {
+        "headerName": "Financial Statement",
+        "width": 450,
+        'hide': false,
+        'pinned': 'left',
+        "editable": true,
+        "cellRendererParams": {
+          "suppressCount": true
+        },
+        "headerTooltip": "Group",
       },
-
+      getDataPath: (data: { name: any; }) => data.name,
+      treeData: true,
+      statusBar: undefined,
+      rowGroupPanelShow: undefined,
+      sideBar: true,
+      groupDisplayType: undefined,
       suppressMenuHide: true,
       enableRangeSelection: true,
       enableCharts: true,
     }),
     []
   );
-  const adaptableOptions = useMemo<AdaptableOptions<WebFramework>>(
+  const adaptableOptions = useMemo<any>(
     () => ({
-      licenseKey: import.meta.env.VITE_ADAPTABLE_LICENSE_KEY,
-      primaryKey: 'id',
-      userName: 'Test User',
+      licenseKey:  import.meta.env.VITE_ADAPTABLE_LICENSE_KEY,
+      // primaryKey: 'id',
+      // userName: 'Test User',
       adaptableId: 'Adaptable React Demo',
-      adaptableStateKey: 'adaptable_react_demo',
-      settingsPanelOptions: {
-        customSettingsPanels: [
-          {
-            // CUSTOM SETTINGS PANEL COMPONENT
-            frameworkComponent: CustomSettingsPanel,
-            name: 'Custom Settings',
-          },
-        ],
-      },
-      dashboardOptions: {
-        customToolbars: [
-          {
-            name: 'GithubRepo',
-            title: 'Github Repo',
-            showConfigureButton: false,
-            toolbarButtons: [
-              {
-                label: 'See Source Code',
-                buttonStyle: {
-                  variant: 'raised',
-                  tone: 'info',
-                },
-                icon: {
-                  src: 'https://www.pngkey.com/png/full/178-1787243_github-icon-png-github-icon-white-png.png',
-                  style: {
-                    width: 24,
-                    height: 24,
-                  },
-                },
-                onClick: () => {
-                  (window as any)
-                    ?.open(
-                      'https://github.com/AdaptableTools/example-adaptable-react-aggrid',
-                      '_blank'
-                    )
-                    .focus();
-                },
-              },
-            ],
-          },
-          {
-            name: 'CustomSettingsPanel',
-            title: 'Custom Settings Panel',
-            showConfigureButton: false,
-            toolbarButtons: [
-              {
-                label: 'Open Custom Settings Panel',
-                buttonStyle: {
-                  variant: 'raised',
-                  tone: 'accent',
-                },
-                onClick: (
-                  _button: AdaptableButton<CustomToolbarButtonContext>,
-                  context: CustomToolbarButtonContext
-                ) => {
-                  context.adaptableApi.settingsPanelApi.openCustomSettingsPanel('Custom Settings');
-                },
-              },
-            ],
-          },
-          {
-            // CUSTOM TOOLBAR COMPONENT
-            // wraps a reusable React component (same component is used in a custom tool panel)
-            name: 'CustomQuickSearch',
-            title: 'Custom Quick Search',
-            frameworkComponent: ({ adaptableApi }) => {
-              return (
-                <Provider store={storeRedux}>
-                  <QuickSearchCustomComponent
-                    onSearchTextChange={(searchText: string) => {
-                      adaptableApi.quickSearchApi.runQuickSearch(searchText);
-                    }}
-                  />
-                </Provider>
-              );
-            },
-          },
-        ],
-      },
-      toolPanelOptions: {
-        customToolPanels: [
-          {
-            // CUSTOM TOOLPANEL COMPONENT
-            // wraps a reusable React component (same component is used in a custom toolbar)
-            name: 'CustomQuickSearch',
-            title: 'Custom Quick Search',
-            frameworkComponent: ({ adaptableApi }) => {
-              return (
-                <QuickSearchCustomComponent
-                  onSearchTextChange={(searchText: string) => {
-                    adaptableApi.quickSearchApi.runQuickSearch(searchText);
-                  }}
-                />
-              );
-            },
-          },
-          {
-            // CUSTOM TOOLPANEL COMPONENT
-            // wraps a AdaptableButton component
-            name: 'CustomToolPanelButton',
-            buttons: [
-              {
-                label: 'AlertButton',
-                buttonStyle: {
-                  variant: 'raised',
-                  tone: 'accent',
-                },
-                onClick: (
-                  _button: AdaptableButton<CustomToolPanelButtonContext>,
-                  context: CustomToolPanelButtonContext
-                ) => {
-                  context.adaptableApi.alertApi.showAlertInfo(
-                    'CustomToolPanelButton',
-                    'Styled button & icon'
-                  );
-                },
-              },
-            ],
-          },
-        ],
-        // CUSTOM TOOLPANEL COMPONENT
-        // rendered as a Button in the heading of the tool panel section
-        customButtons: [
-          {
-            label: 'Grid Filter Popup',
-            icon: {
-              src: 'https://img.icons8.com/glyph-neue/64/000000/zoom-in.png',
-            },
-            buttonStyle: {
-              variant: 'outlined',
-              // tone: 'accent',
-            },
-            onClick: (
-              _button: AdaptableButton<ToolPanelButtonContext>,
-              context: ToolPanelButtonContext
-            ) => {
-              context.adaptableApi.gridFilterApi.openUIEditorForGridFilter(
-                'CONTAINS([language],"type")'
-              );
-            },
-          },
-        ],
-      },
+      // adaptableStateKey: 'adaptable_react_demo',
       // Typically you will store State remotely; here we simply leverage local storage for convenience
-      stateOptions: {
-        persistState: (state, adaptableStateFunctionConfig) => {
-          localStorage.setItem(
-            adaptableStateFunctionConfig.adaptableStateKey,
-            JSON.stringify(state)
-          );
-          return Promise.resolve(true);
-        },
-        loadState: (config: AdaptableStateFunctionConfig) => {
-          return new Promise((resolve) => {
-            let state = {};
-            try {
-              state = JSON.parse(localStorage.getItem(config.adaptableStateKey) as string) || {};
-            } catch (err) {
-              console.log('Error loading state', err);
-            }
-            resolve(state);
-          });
-        },
-      },
       predefinedConfig: {
-        Dashboard: {
-          Revision: CONFIG_REVISION,
-          Tabs: [
+        FormatColumn: {
+          FormatColumns: [
             {
-              Name: 'Welcome',
-              Toolbars: ['GithubRepo', 'CustomSettingsPanel', 'CustomQuickSearch'],
-            },
-          ],
-        },
-        StatusBar: {
-          Revision: CONFIG_REVISION,
-          StatusBars: [
-            {
-              Key: 'Center Panel',
-              StatusBarPanels: ['Theme', 'Layout'],
-            },
-          ],
-        },
-        Layout: {
-          CurrentLayout: 'Basic',
-          Layouts: [
-            {
-              Name: 'Basic',
-              Columns: [
-                'name',
-                'language',
-                'github_stars',
-                'license',
-                'week_issue_change',
-                'created_at',
-                'has_wiki',
-                'updated_at',
-                'pushed_at',
-                'github_watchers',
-                'description',
-                'open_issues_count',
-                'closed_issues_count',
-                'open_pr_count',
-                'closed_pr_count',
-              ],
-            },
-            {
-              Name: 'Sorted',
-              Columns: [
-                'name',
-                'language',
-                'github_stars',
-                'license',
-                'open_issues_count',
-                'closed_issues_count',
-                'open_pr_count',
-                'closed_pr_count',
-              ],
-              ColumnSorts: [
-                {
-                  ColumnId: 'license',
-                  SortOrder: 'Asc',
-                },
-                {
-                  ColumnId: 'language',
-                  SortOrder: 'Desc',
-                },
-              ],
-            },
-            {
-              Name: 'Row Grouped',
-              Columns: [
-                'name',
-                'github_stars',
-                'open_issues_count',
-                'closed_issues_count',
-                'open_pr_count',
-                'closed_pr_count',
-                'open_issues_count',
-                'closed_issues_count',
-              ],
-              RowGroupedColumns: ['license', 'language'],
-            },
-            {
-              Name: 'Pivot',
-              Columns: [],
-              PivotColumns: ['language'],
-              RowGroupedColumns: ['license'],
-              EnablePivot: true,
-              AggregationColumns: {
-                github_stars: 'sum',
+              Scope: {
+                ColumnIds: ['2024', '2025', '2026'],
               },
-            },
-          ],
+              DisplayFormat: {
+                Formatter: 'NumberFormatter',
+                Options: {
+                  FractionDigits: 2,
+                  Suffix: '%',
+                  Multiplier: 100,
+                },
+              },
+            },]
         },
       },
     }),
