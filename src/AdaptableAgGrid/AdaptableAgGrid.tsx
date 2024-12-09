@@ -28,59 +28,285 @@ export const AdaptableAgGrid = () => {
   const gridOptions = useMemo<any>(
     () => ({
       defaultColDef,
-      columnDefs,
+      "sideBar": true,
+      "suppressRowGroupHidesColumns": true,
+      "rowGroupPanelShow": "always",
+      "groupDisplayType": "groupRows",
+      "groupDefaultExpanded": 1,
+      "rowSelection": "multiple",
+      "stopEditingWhenCellsLoseFocus": true,
+      "suppressRowClickSelection": true,
       rowData,
-      stopEditingWhenCellsLoseFocus: true,
-      autoGroupColumnDef: {
-        "headerName": "Financial Statement",
-        "width": 450,
-        'hide': false,
-        'pinned': 'left',
-        "editable": true,
-        "cellRendererParams": {
-          "suppressCount": true
-        },
-        "headerTooltip": "Group",
-      },
-      getDataPath: (data: { name: any; }) => data.name,
-      treeData: true,
-      statusBar: undefined,
-      rowGroupPanelShow: undefined,
-      sideBar: true,
-      groupDisplayType: undefined,
-      suppressMenuHide: true,
-      enableRangeSelection: true,
-      enableCharts: true,
-    }),
+      columnDefs
+  }),
     []
   );
   const adaptableOptions = useMemo<any>(
     () => ({
-      licenseKey:  import.meta.env.VITE_ADAPTABLE_LICENSE_KEY,
-      // primaryKey: 'id',
-      // userName: 'Test User',
-      adaptableId: 'Adaptable React Demo',
-      // adaptableStateKey: 'adaptable_react_demo',
-      // Typically you will store State remotely; here we simply leverage local storage for convenience
-      predefinedConfig: {
-        FormatColumn: {
-          FormatColumns: [
-            {
-              Scope: {
-                ColumnIds: ['2024', '2025', '2026'],
-              },
-              DisplayFormat: {
-                Formatter: 'NumberFormatter',
-                Options: {
-                  FractionDigits: 2,
-                  Suffix: '%',
-                  Multiplier: 100,
-                },
-              },
-            },]
-        },
+      "licenseKey": import.meta.env.VITE_ADAPTABLE_LICENSE_KEY,
+      "autogeneratePrimaryKey": false,
+      "primaryKey": "id",
+      "layoutOptions": {
+          "createDefaultLayout": true,
+          "displayRowGroups": "expanded"
       },
-    }),
+      "quickSearchOptions": {
+          "filterResultsAfterQuickSearch": true
+      },
+      "predefinedConfig": {
+          "Theme": {
+              "UserThemes": [
+                  {
+                      "Name": "ivprad",
+                      "Description": "User Made Theme",
+                      "AgGridClassName": "ag-theme-balham",
+                      "Uuid": "ce7118f4-e043-43ba-9c13-934c858a88a4"
+                  }
+              ],
+              "CurrentTheme": "ivprad",
+              "Uuid": "fb142cea-acc3-477c-a1a3-7fcd01cbd9e0"
+          },
+          "StatusBar": {
+              "StatusBars": [
+                  {
+                      "Key": "Center Panel",
+                      "StatusBarPanels": [
+                          "Layout"
+                      ],
+                      "Uuid": "5543bedb-cd0b-4c97-95fd-9750c2ad6ce0"
+                  }
+              ],
+              "Uuid": "251c4346-2495-40b9-8b8b-f3431a385d15"
+          },
+          "FormatColumn": {
+              "FormatColumns": [
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "dueDate"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "DateFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "dateCustomFormat"
+                              ],
+                              "dateFormat": "MM/DD/YYYY"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q3 2024"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q2 2024"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q1 2024"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q4 2023"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q3 2023"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q2 2023"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q1 2023"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q4 2022"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q3 2022"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q2 2022"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q1 2022"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  },
+                  {
+                      "Scope": {
+                          "ColumnIds": [
+                              "Q4 2021"
+                          ]
+                      },
+                      "DisplayFormat": {
+                          "Formatter": "NumberFormatter",
+                          "Options": {
+                              "CustomDisplayFormats": [
+                                  "numeralCustomFormat"
+                              ],
+                              "numeralFormat": "1.2345a"
+                          }
+                      }
+                  }
+              ],
+              "Uuid": "723c5cc6-4ed3-4ae6-8d23-213c7255abc1"
+          },
+          "Dashboard": {
+              "ModuleButtons": [],
+              "IsCollapsed": true,
+              "Tabs": [
+                  {
+                      "Name": "Grid",
+                      "Toolbars": [
+                          "Manage Tools"
+                      ]
+                  }
+              ]
+          }
+      },
+     
+      "adaptableId": "dmGrid",
+  }),
     []
   );
 
@@ -92,8 +318,12 @@ export const AdaptableAgGrid = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <div style={{ marginBottom: 20 }}>
-        <button onClick={() => dispatch({ type: 'counter/incremented' })}>increment</button>
-        <button onClick={() => dispatch({ type: 'counter/decremented' })}>decrement</button>
+        <button onClick={() => {
+          adaptableApiRef?.current?.gridApi?.selectColumns(['meghna', 'Q3 2024']);
+        }}>Select column</button>
+        <button onClick={() => {
+          adaptableApiRef?.current?.gridApi?.selectAll();
+        }}>select all</button>
         <b style={{ marginLeft: 10 }}>{count}</b>
       </div>
       <Adaptable.Provider
