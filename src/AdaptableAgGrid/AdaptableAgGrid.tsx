@@ -36,6 +36,7 @@ export const AdaptableAgGrid = () => {
       "rowSelection": "multiple",
       "stopEditingWhenCellsLoseFocus": true,
       "suppressRowClickSelection": true,
+      cellSelection: true,
       rowData,
       columnDefs
   }),
