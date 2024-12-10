@@ -319,7 +319,7 @@ export const AdaptableAgGrid = () => {
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <div style={{ marginBottom: 20 }}>
         <button onClick={() => {
-          adaptableApiRef?.current?.gridApi?.selectColumns(['meghna', 'Q3 2024']);
+          adaptableApiRef?.current?.columnApi?.selectColumns(['meghna', 'Issuer']);
         }}>Select column</button>
         <button onClick={() => {
           adaptableApiRef?.current?.gridApi?.selectAll();
