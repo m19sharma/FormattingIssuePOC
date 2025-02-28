@@ -28,6 +28,20 @@ export const AdaptableAgGrid = () => {
             "rowSelection": "multiple",
             "stopEditingWhenCellsLoseFocus": true,
             "suppressRowClickSelection": true,
+            suppressMenuHide: true,
+            enableRangeSelection: true,
+            enableCharts: true,
+            statusBar: {
+                statusPanels: [
+                    { statusPanel: 'agTotalRowCountComponent', align: 'left' },
+                    { statusPanel: 'agFilteredRowCountComponent' },
+                    {
+                        key: 'Center Panel',
+                        statusPanel: 'AdaptableStatusPanel',
+                        align: 'center',
+                    },
+                ],
+            },
             cellSelection: true,
             rowData,
             columnDefs
@@ -39,7 +53,17 @@ export const AdaptableAgGrid = () => {
             "licenseKey": import.meta.env.VITE_ADAPTABLE_LICENSE_KEY,
             "autogeneratePrimaryKey": false,
             "primaryKey": "id",
-
+            "predefinedConfig": {
+                StatusBar: {
+                    Revision: CONFIG_REVISION,
+                    StatusBars: [
+                        {
+                            Key: 'Center Panel',
+                            StatusBarPanels: ['Theme'],
+                        },
+                    ],
+                },
+            },
             "adaptableId": "dmGrid",
         }),
         []
